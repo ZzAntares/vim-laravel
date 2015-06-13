@@ -1,0 +1,155 @@
+*laravel.txt* Plugin for working with Laravel 5.x applications
+
+                                        __             ___       ~
+             \  / |  |\/| __ |     /\  |__)  /\  \  / |__  |     ~
+              \/  |  |  |    |___ /~~\ |  \ /~~\  \/  |___ |___  ~
+
+        Provides a fluent wrapper to execute artisan comands as well as
+                opening and creating various application files.
+
+==============================================================================
+CONTENTS                                               *laravel*
+
+    1. Usage .......................................... |laravel-usage|
+        1.1 Overview .................................. |laravel-overview|
+    2. Commands ....................................... |laravel-commands|
+    3. Options ........................................ |laravel-commands|
+        3.1 g:laravel_vim_create_if_not_exists ........ |laravel-handler|
+    4. License ........................................ |laravel-license|
+    5. Bugs ........................................... |laravel-bugs|
+    6. Contributing ................................... |laravel-contributing|
+    7. Changelog ...................................... |laravel-changelog|
+    8. Credits ........................................ |laravel-credits|
+
+
+==============================================================================
+1. Usage                                               *laravel-usage*
+
+Vim-Laravel is a simple wrapper to the artisan command line tool bundled in
+every Laravel 5 application. Thats right, this plugin is only intended to use
+with Laravel 5.x version.
+
+This plugin can only be used if the current working directory is the application
+root directory (the one holding the artisan script).
+
+------------------------------------------------------------------------------
+1.1 Overview                                           *laravel-overview*
+
+As simple as can get with this plugin you can do:
+
+    :Artisan inspire
+
+This will get translated to:
+
+    :!php artisan inspire
+
+You can also use shortcuts:
+
+    :Amake controller ProductsController
+
+Which will translate to:
+
+    :!php artisan make:controller ProductsController
+
+Also there is a open helper:
+
+    :Lmodel Product
+
+This will attemt to open a model called 'Product' if it does not exist will
+ask you if you want to create the file, generate the model or do nothing.
+
+
+==============================================================================
+2. Commands                                            *laravel-commands*
+
+Here is a list of available commands and what they do:
+
+:Artisan [args]       Run an arbitrary artisan command, translates to
+                      :!php artisan [args]
+
+:A<namespace> [args]  Run artisan commands under the <namespace> namespace,
+                      translates to :!php artisan <namespace> [args]
+                      Eg. :Amake model Post   -> :!php artisan make:model Post
+                      Eg. :Adb seed           -> :!php artisan db:seed
+
+:L<resource> <args>   Attempts to open application files those whos can be
+                      created via 'artisan make:' command.
+
+                      Eg. :Lmodel User       -> :e app/User.php
+                      Eg. :Lcontroller Posts ->
+                                :e app/Http/Controllers/PostsController.php
+
+                      If resource doesn't exists fallback to the
+                      |laravel-handler|.
+
+
+==============================================================================
+3. Options                                             *laravel-options*
+
+You can set this options in your .vimrc to alter the vim-laravel behaviour under
+some circumstances.
+
+
+------------------------------------------------------------------------------
+3.1 g:laravel_vim_create_if_not_exists                 *laravel-handler*
+
+Set this to change the default action when attempting to open a non existent
+resource eg. :Lmodel Unexistent
+
+Options:
+    'notify'
+        If the resource doesn't exists it will simply notify such event.
+
+    'ask'
+        When the resource does not exist it will ask what to do giving the
+        option to cancel the operation.
+
+    'empty'
+        If the resource doesn't exists then it will open it as an empty file
+        (this does not write the file to disk unless you explicitly save it)
+
+    'artisan'
+        When the resource doesn't exist will generate it via the "artisan make:"
+        command thus :Lmodel Client will perform "php artisan make:model Client"
+        if such model Client does not exist of course.
+
+
+==============================================================================
+4. License                                             *laravel-license*
+
+Vim-laravel is released under the wtfpl.
+
+    License: http://sam.zoy.org/wtfpl/COPYING.
+
+
+==============================================================================
+5. Bugs                                                *laravel-bugs*
+
+Please report any bugs you may find on the GitHub issue tracker:
+
+    https://github.com/ZzAntares/vim-laravel/issues
+
+
+==============================================================================
+6. Contributing                                        *laravel-contributing*
+
+Thanks for thinking of it, you're very welcome just fork the project and send
+your pull request via github.
+
+    GitHub: https://github.com/ZzAntares/vim-laravel
+
+
+==============================================================================
+7. Changelog                                           *laravel-changelog*
+
+v0.1.0
+    - It supports calls to all commands via :Artisan <command>
+    - Can open resources done via artisan's 'make' command using :L<resource>
+
+
+==============================================================================
+8. Credits                                             *laravel-credits*
+
+Thanks to Tim Pope and his co-workers for the insipiring work made at vim-rails,
+also to Steve Losh for an awesome course on vimscript language.
+
