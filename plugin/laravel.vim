@@ -14,10 +14,9 @@ endif
 let g:loaded_laravel = 1
 
 " Options
-" Si no existe un recurso lo crea
 if !exists('g:laravel_vim_create_if_not_exists')
     " Values are: 'notify', 'ask', 'empty', 'artisan'
-    let g:laravel_vim_create_if_not_exists = 'artisan'
+    let g:laravel_vim_create_if_not_exists = 'ask'
 endif
 
 
