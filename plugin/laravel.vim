@@ -60,76 +60,76 @@ endfunction
 
 
 " Artisan wrapper
-function! Artisan(command, ...)
+function! s:Artisan(command, ...)
     let l:command = a:command . ' ' . join(a:000)
     call s:executor(l:command)
 endfunction
 
 
 " Helper functions sub-artisan wrappers
-function! ArtisanApp(action, ...)
+function! s:ArtisanApp(action, ...)
     call s:artisan('app:' . a:action, a:000)
 endfunction
 
-function! ArtisanAuth(action, ...)
+function! s:ArtisanAuth(action, ...)
     call s:artisan('auth:' . a:action, a:000)
 endfunction
 
-function! ArtisanCache(action, ...)
+function! s:ArtisanCache(action, ...)
     call s:artisan('cache:' . a:action, a:000)
 endfunction
 
-function! ArtisanConfig(action, ...)
+function! s:ArtisanConfig(action, ...)
     call s:artisan('config:' . a:action, a:000)
 endfunction
 
-function! ArtisanDb(action, ...)
+function! s:ArtisanDb(action, ...)
     call s:artisan('db:' . a:action, a:000)
 endfunction
 
-function! ArtisanEvent(action, ...)
+function! s:ArtisanEvent(action, ...)
     call s:artisan('event:' . a:action, a:000)
 endfunction
 
-function! ArtisanHandler(action, ...)
+function! s:ArtisanHandler(action, ...)
     call s:artisan('handler:' . a:action, a:000)
 endfunction
 
-function! ArtisanKey(action, ...)
+function! s:ArtisanKey(action, ...)
     call s:artisan('key:' . a:action, a:000)
 endfunction
 
-function! ArtisanMake(resource, ...)
+function! s:ArtisanMake(resource, ...)
     call s:artisan('make:' . a:resource, a:000)
 endfunction
 
-function! ArtisanMigrate(action, ...)
+function! s:ArtisanMigrate(action, ...)
     call s:artisan('migrate:' . a:action, a:000)
 endfunction
 
-function! ArtisanQueue(action, ...)
+function! s:ArtisanQueue(action, ...)
     call s:artisan('queue:' . a:action, a:000)
 endfunction
 
-function! ArtisanRoute(action, ...)
+function! s:ArtisanRoute(action, ...)
     call s:artisan('route:' . a:action, a:000)
 endfunction
 
-function! ArtisanSchedule(action, ...)
+function! s:ArtisanSchedule(action, ...)
     call s:artisan('schedule' . a:action, a:000)
 endfunction
 
-function! ArtisanSession(action, ...)
+function! s:ArtisanSession(action, ...)
     call s:artisan('session:' . a:action, a:000)
 endfunction
 
-function! ArtisanVendor(action, ...)
+function! s:ArtisanVendor(action, ...)
     call s:artisan('vendor:' . a:action, a:000)
 endfunction
 
 
 " Open file helpers
-function! LaravelController(controller, ...)
+function! s:LaravelController(controller, ...)
     call s:boot()
     let command = 'app/Http/Controllers/' . a:controller . 'Controller.php'
 
@@ -146,7 +146,7 @@ function! LaravelController(controller, ...)
             let choice = input(command . ' does not exist, (m)ake, (e)mpty, (c)ancel?: ')
 
             if choice == 'm' || choice == 'make'
-                call ArtisanMake('controller', a:controller . 'Controller ' . join(a:000))
+                call s:ArtisanMake('controller', a:controller . 'Controller ' . join(a:000))
                 call s:laravel_executor('e ' . command)
             elseif choice == 'e' || choice == 'empty'
                 call s:laravel_executor('e ' . command)
@@ -158,13 +158,13 @@ function! LaravelController(controller, ...)
             call s:laravel_executor('e ' . command)
 
         elseif (g:laravel_vim_create_if_not_exists == 'artisan')
-            call ArtisanMake('controller', a:controller,  . 'Controller ' . join(a:000))
+            call s:ArtisanMake('controller', a:controller,  . 'Controller ' . join(a:000))
             call s:laravel_executor('e ' . command)
         endif
     endif
 endfunction
 
-function! LaravelModel(model)
+function! s:LaravelModel(model)
     call s:boot()
     let command = 'app/' . a:model . '.php'
 
@@ -181,7 +181,7 @@ function! LaravelModel(model)
             let choice = input(command . ' does not exist, (m)ake, (e)mpty, (c)ancel?: ')
 
             if choice == 'm' || choice == 'make'
-                call ArtisanMake('model', a:model)
+                call s:ArtisanMake('model', a:model)
                 call s:laravel_executor('e ' . command)
             elseif choice == 'e' || choice == 'empty'
                 call s:laravel_executor('e ' . command)
@@ -193,14 +193,14 @@ function! LaravelModel(model)
             call s:laravel_executor('e ' . command)
 
         elseif (g:laravel_vim_create_if_not_exists == 'artisan')
-            call ArtisanMake('model', a:model)
+            call s:ArtisanMake('model', a:model)
             call s:laravel_executor('e ' . command)
         endif
     endif
 
 endfunction
 
-function! LaravelCommand(command)
+function! s:LaravelCommand(command)
     call s:boot()
     let command = 'app/Commands/' . a:command . '.php'
 
@@ -217,7 +217,7 @@ function! LaravelCommand(command)
             let choice = input(command . ' does not exist, (m)ake, (e)mpty, (c)ancel?: ')
 
             if choice == 'm' || choice == 'make'
-                call ArtisanMake('command', a:command)
+                call s:ArtisanMake('command', a:command)
                 call s:laravel_executor('e ' . command)
             elseif choice == 'e' || choice == 'empty'
                 call s:laravel_executor('e ' . command)
@@ -229,28 +229,28 @@ function! LaravelCommand(command)
             call s:laravel_executor('e ' . command)
 
         elseif (g:laravel_vim_create_if_not_exists == 'artisan')
-            call ArtisanMake('command', a:command)
+            call s:ArtisanMake('command', a:command)
             call s:laravel_executor('e ' . command)
         endif
     endif
 endfunction
 
-command! -nargs=* Artisan call Artisan(<f-args>)
-command! -nargs=* Aapp call ArtisanApp(<f-args>)
-command! -nargs=* Aauth call ArtisanAuth(<f-args>)
-command! -nargs=* Acache call ArtisanCache(<f-args>)
-command! -nargs=* Aconfig call ArtisanConfig(<f-args>)
-command! -nargs=* Adb call ArtisanDb(<f-args>)
-command! -nargs=* Aevent call ArtisanEvent(<f-args>)
-command! -nargs=* Ahandler call ArtisanHandler(<f-args>)
-command! -nargs=* Akey call ArtisanKey(<f-args>)
-command! -nargs=* Amake call ArtisanMake(<f-args>)
-command! -nargs=* Amigrate call ArtisanMigrate(<f-args>)
-command! -nargs=* Aqueue call ArtisanQueue(<f-args>)
-command! -nargs=* Aroute call ArtisanRoute(<f-args>)
-command! -nargs=* Asession call ArtisanSession(<f-args>)
-command! -nargs=* Avendor call ArtisanVendor(<f-args>)
+command! -nargs=* Artisan call s:Artisan(<f-args>)
+command! -nargs=* Aapp call s:ArtisanApp(<f-args>)
+command! -nargs=* Aauth call s:ArtisanAuth(<f-args>)
+command! -nargs=* Acache call s:ArtisanCache(<f-args>)
+command! -nargs=* Aconfig call s:ArtisanConfig(<f-args>)
+command! -nargs=* Adb call s:ArtisanDb(<f-args>)
+command! -nargs=* Aevent call s:ArtisanEvent(<f-args>)
+command! -nargs=* Ahandler call s:ArtisanHandler(<f-args>)
+command! -nargs=* Akey call s:ArtisanKey(<f-args>)
+command! -nargs=* Amake call s:ArtisanMake(<f-args>)
+command! -nargs=* Amigrate call s:ArtisanMigrate(<f-args>)
+command! -nargs=* Aqueue call s:ArtisanQueue(<f-args>)
+command! -nargs=* Aroute call s:ArtisanRoute(<f-args>)
+command! -nargs=* Asession call s:ArtisanSession(<f-args>)
+command! -nargs=* Avendor call s:ArtisanVendor(<f-args>)
 
-command! -nargs=* Lcontroller call LaravelController(<f-args>)
-command! -nargs=* Lmodel call LaravelModel(<f-args>)
-command! -nargs=* Lcommand call LaravelCommand(<f-args>)
+command! -nargs=* Lcontroller call s:LaravelController(<f-args>)
+command! -nargs=* Lmodel call s:LaravelModel(<f-args>)
+command! -nargs=* Lcommand call s:LaravelCommand(<f-args>)
