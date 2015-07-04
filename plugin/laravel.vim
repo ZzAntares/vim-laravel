@@ -7,11 +7,11 @@ if (!executable('php'))
 endif
 
 " ifndef ... define
-" if exists('g:loaded_laravel')
-"     finish
-" endif
-" 
-" let g:loaded_laravel = 1
+if exists('g:loaded_laravel')
+    finish
+endif
+
+let g:loaded_laravel = 1
 
 " Options
 " Si no existe un recurso lo crea
